@@ -1,10 +1,83 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Home page</title>
-        <link rel="stylesheet" type="text/css" href="file.css">
-    </head>
-    <body>
-        <script src="main.js"></script>
-    </body>
+<html>
+<head>
+    <title>Utility Calculator Suite</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- DARK/LIGHT MODE SWITCH -->
+<label class="switch">
+    <input type="checkbox" id="modeToggle">
+    <span class="slider"></span>
+</label>
+
+<h1><i class="fa-solid fa-calculator"></i> Utility Calculator Suite</h1>
+<p>Version 1.8</p>
+
+<!-- MENU BUTTONS -->
+<div class="menu">
+    <button class="btn" data-action="basic"><i class="fa-solid fa-plus-minus"></i> Basic</button>
+    <button class="btn" data-action="areaCircle"><i class="fa-solid fa-circle"></i> Area</button>
+    <button class="btn" data-action="heightObject"><i class="fa-solid fa-mountain"></i> Height</button>
+    <button class="btn" data-action="circumference"><i class="fa-solid fa-ring"></i> Circumference</button>
+    <button class="btn" data-action="v1"><i class="fa-solid fa-plane-departure"></i> V1 Cockpit</button>
+    <button class="btn" data-action="cylinder"><i class="fa-solid fa-oil-can"></i> Cylinder</button>
+    <button class="btn" data-action="sphereArea"><i class="fa-solid fa-globe"></i> Sphere Area</button>
+    <button class="btn" data-action="sphereVolume"><i class="fa-solid fa-basketball"></i> Sphere Volume</button>
+    <button class="btn" data-action="quiz"><i class="fa-solid fa-lock"></i> Secret</button>
+</div>
+
+<div id="output">Select a tool to begin.</div>
+
+<!-- V1 COCKPIT PANEL -->
+<div id="v1-panel" class="panel hidden">
+    <h2><i class="fa-solid fa-plane-departure"></i> V1 Cockpit</h2>
+
+    <div class="cockpit-row">
+        <div class="cockpit-col">
+            <label>Runway length (ft)</label>
+            <input type="number" id="rl" value="8000">
+
+            <label>Acceleration (ft/s²)</label>
+            <input type="number" id="accel" value="8">
+
+            <label>Vr</label>
+            <input type="number" id="vr" value="150">
+
+            <label>Units</label>
+            <select id="vrUnit">
+                <option value="kts">kts</option>
+                <option value="mph">mph</option>
+                <option value="kph">kph</option>
+            </select>
+
+            <button class="btn" id="computeV1">
+                <i class="fa-solid fa-gauge-high"></i> Compute V1
+            </button>
+        </div>
+
+        <div class="cockpit-col gauges">
+            <div class="gauge">
+                <span class="label">V1</span>
+                <span id="v1Display">--</span>
+            </div>
+            <div class="gauge">
+                <span class="label">Distance to V1</span>
+                <span id="v1DistDisplay">--</span>
+            </div>
+            <div class="gauge">
+                <span class="label">Can reach Vr?</span>
+                <span id="vrStatus">--</span>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="v1Graph" width="600" height="250"></canvas>
+</div>
+
+<script src="main.js"></script>
+</body>
 </html>
