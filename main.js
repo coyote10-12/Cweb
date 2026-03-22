@@ -245,3 +245,71 @@ ctx.beginPath();
 ctx.arc(xV2, yV2, 4, 0, Math.PI * 2);
 ctx.fill();
 ctx.fillText("V2", xV2 + 5, yV2 - 5);
+document.getElementById("computeV1").addEventListener("click", () => {
+
+    // Animate throttle lever
+    const lever = document.getElementById("lever");
+    lever.classList.add("lever-forward");
+    setTimeout(() => lever.classList.remove("lever-forward"), 2000);
+
+    const rl = parseFloat(rlInput.value);
+    const a = parseFloat(accelInput.value);
+    const vrVal = parseFloat(vrInput.value);
+    const unit = vrUnitSelect.value;
+
+    if (isNaN(rl) || isNaN(a) || isNaN(vrVal) || rl <= 0 || a <= 0) {
+        out("Enter valid positive numbers for runway and acceleration.");
+        return;
+    }
+
+    // Convert Vr to ft/s
+    let vr_fts;
+    if (unit === "kts") vr_fts = vrVal * 1.68781;
+    else if (unit === "mph") vr_fts = vrVal * 1.46667;
+    else vr_fts = vrVal * 0.911344;
+
+    // Distance needed to reach Vr
+    const s_total = (vr_fts * vr_fts) / (2 * a);
+
+    if (s_total > rl) {
+        vrStatus.textContent = "NO";
+        v1Display.textContent = "--";
+        v1DistDisplay.textContent = "--";
+        document.getElementById("runwayProgress").style.width = "0%";
+
+        out(
+            "You cannot reach Vr on this runway.\n" +
+            "Needed: " + s_total.toFixed(0) + " ft\n" +
+            "Runway: " + rl.toFixed(0) + " ft"
+        );
+        return;
+    }
+
+    // Vr reachable
+    vrStatus.textContent = "YES";
+
+    // V1 = halfway down runway (toy model)
+    const s_v1 = rl / 2;
+    const v1_fts = Math.sqrt(2 * a * s_v1);
+
+    // Convert V1 back to user units
+    let v1_out;
+    if (unit === "kts") v1_out = v1_fts / 1.68781;
+    else if (unit === "mph") v1_out = v1_fts / 1.46667;
+    else v1_out = v1_fts / 0.911344;
+
+    v1Display.textContent = v1_out.toFixed(1) + " " + unit;
+    v1DistDisplay.textContent = s_v1.toFixed(0) + " ft";
+
+    // Runway progress bar
+    const progressPercent = (s_v1 / rl) * 100;
+    document.getElementById("runwayProgress").style.width = progressPercent + "%";
+
+    out(
+        "Approx V1 = " + v1_out.toFixed(1) + " " + unit +
+        "\nDistance to V1 ≈ " + s_v1.toFixed(0) + " ft"
+    );
+
+    // Draw graph with Vr, V1, V2 markers
+    drawV1Graph(rl, a, vr_fts, s_v1, v1_fts);
+});
