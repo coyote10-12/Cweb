@@ -202,3 +202,28 @@ body.light #v1Graph {
     background: #fff;
     border-color: #0077ff;
 }
+.throttle {
+    width: 60px;
+    height: 160px;
+    margin: 20px auto;
+    background: #222;
+    border: 2px solid #4af;
+    border-radius: 10px;
+    position: relative;
+}
+
+#lever {
+    width: 40px;
+    height: 40px;
+    background: #555;
+    border-radius: 6px;
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    transition: transform 1.2s ease-in-out;
+}
+
+/* lever forward */
+.lever-forward {
+    transform: translateY(-100px);
+}
