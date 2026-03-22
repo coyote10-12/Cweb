@@ -313,3 +313,5 @@ document.getElementById("computeV1").addEventListener("click", () => {
     // Draw graph with Vr, V1, V2 markers
     drawV1Graph(rl, a, vr_fts, s_v1, v1_fts);
 });
+document.querySelectorAll(".btn[data-action]")
+
